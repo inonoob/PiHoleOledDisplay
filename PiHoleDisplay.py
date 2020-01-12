@@ -18,8 +18,12 @@ interface = os.getenv('PIHOLE_OLED_INTERFACE', 'eth0')
 # Mount point for disk usage info
 mount_point = os.getenv('PIHOLE_OLED_MOUNT_POINT', '/')
 # There is no reset pin on the SSD1306 0.96"
-# Create the I2C interface.
+
+
+# Create the I2C interface for the Oled Display
 i2c = busio.I2C(SCL, SDA)
+
+#Init the display with the Size 128x32. My screen is a 0,96" Oled display with a resolution of 128x32
 
 disp = adafruit_ssd1306.SSD1306_I2C(128, 32, i2c)
 
@@ -30,6 +34,9 @@ disp.show()
 
 image = Image.new('1', (width, height))
 draw = ImageDraw.Draw(image)
+
+#fonts
+
 font = ImageFont.truetype('/home/pi/DisplayPiHole/SF_Pixelate.ttf', 8)
 font2 = ImageFont.truetype('/home/pi/DisplayPiHole/SF_Pixelate.ttf', 40)
 font3 = ImageFont.truetype('/home/pi/DisplayPiHole/SF_Pixelate.ttf', 10)
@@ -39,7 +46,6 @@ sleep = 1  # seconds
 hostname = platform.node()
 
 try:
-    elapsed_seconds = 0
 
     while True:
 
@@ -85,8 +91,6 @@ try:
             if x < 10:
 
                 draw.rectangle((0, 0, width, height), outline=0, fill=0)
-
-                #cpu = int(psutil.cpu_percent(percpu=False))
 
                 draw.text((0, 0), "Pi Status:", font=font, fill=255)
 
