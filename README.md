@@ -8,14 +8,16 @@
 
 ## Prerequisite 
 
-Have a 
+download the lastest version of
 
-If you do not have `pipenv` installed, install it too:
+If you do not have `test` installed, install it too:
 
+At first start install the following packages.
 
 ```
 sudo apt-get update
 sudo apt-get upgrade
+sudo apt-get install i2c-tools
 sudo apt-get install pip3
 sudo apt install python3-pip
 sudo pip3 install Pillow
