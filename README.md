@@ -8,11 +8,11 @@
 
 ## Prerequisite 
 
-download the lastest version of
+Have a Raspberry Pi with the lastest Raspbian installed
 
-If you do not have `test` installed, install it too:
+## Installation of needed packages
 
-At first start install the following packages.
+Download the following packages
 
 ```
 sudo apt-get update
@@ -28,5 +28,3 @@ pip3 install psutil
 pip3 install requests
 ```
 
-
-You can exit the script with <kbd>ctrl</kbd>+<kbd>c</kbd>.
