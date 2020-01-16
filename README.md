@@ -9,6 +9,8 @@ Inspired by willdurand/pihole-oled, I updated to work with the newest version of
 
 Connect
 
+![alt text](https://github.com/inonoob/PiHoleOledDisplay/blob/master/res/Oled-Pi-connection_Steckplatine.png)
+
 ### Connect oled display with the Rasperberry Pi:  
 
 ## Software 
