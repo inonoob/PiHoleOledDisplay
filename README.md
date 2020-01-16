@@ -1,6 +1,13 @@
 # PiHoleOledDisplay
 
+Inspired by willdurand/pihole-oled, I updated to work with the newest version of the Adafruit lib and other updates
+
 ## Hardware
+
+- Oled display 0,96" 128x32
+- Raspberry pi 
+
+Connect
 
 ### Connect oled display with the Rasperberry Pi:  
 
