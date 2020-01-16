@@ -1,6 +1,7 @@
 import os
 import platform
 import time
+import logging
 
 from board import SCL, SDA
 import busio
@@ -14,16 +15,19 @@ from PIL import ImageDraw
 from PIL import ImageFont
 from datetime import datetime
 
+
+
+# Config
+logging.basicConfig(filename='/home/pi/DisplayPiHole/PiDisp.log', level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s')
+logger = logging.getLogger(__name__)
+
+# Network interface to retrieve the IP address
 interface = os.getenv('PIHOLE_OLED_INTERFACE', 'eth0')
 # Mount point for disk usage info
 mount_point = os.getenv('PIHOLE_OLED_MOUNT_POINT', '/')
 # There is no reset pin on the SSD1306 0.96"
-
-
-# Create the I2C interface for the Oled Display
+# Create the I2C interface.
 i2c = busio.I2C(SCL, SDA)
-
-#Init the display with the Size 128x32. My screen is a 0,96" Oled display with a resolution of 128x32
 
 disp = adafruit_ssd1306.SSD1306_I2C(128, 32, i2c)
 
@@ -34,18 +38,20 @@ disp.show()
 
 image = Image.new('1', (width, height))
 draw = ImageDraw.Draw(image)
-
-#fonts
-
 font = ImageFont.truetype('/home/pi/DisplayPiHole/SF_Pixelate.ttf', 8)
 font2 = ImageFont.truetype('/home/pi/DisplayPiHole/SF_Pixelate.ttf', 40)
 font3 = ImageFont.truetype('/home/pi/DisplayPiHole/SF_Pixelate.ttf', 10)
+# font = ImageFont.truetype('VCR_OSD_MONO_1.001.ttf', 8)
+# font2 = ImageFont.truetype('VCR_OSD_MONO_1.001.ttf', 32)
+# font3 = ImageFont.truetype('VCR_OSD_MONO_1.001.ttf', 10)
+#font = ImageFont.load_default()
 
 sleep = 1  # seconds
 
 hostname = platform.node()
 
 try:
+    elapsed_seconds = 0
 
     while True:
 
@@ -92,7 +98,9 @@ try:
 
                 draw.rectangle((0, 0, width, height), outline=0, fill=0)
 
-                draw.text((0, 0), "Pi Status:", font=font, fill=255)
+                #cpu = int(psutil.cpu_percent(percpu=False))
+
+                draw.text((0, 0), "Pihole Backup Status:", font=font, fill=255)
 
                 cpu = int(psutil.cpu_percent(percpu=False))
                 draw.text((0, 8), "CPU", font=font, fill=255)
@@ -144,7 +152,7 @@ try:
             else:
                 pass
 
-        req = requests.get('http://pi.hole/admin/api.php')
+        req = requests.get('http://127.0.0.1/admin/api.php')
         data = req.json()
 
         for x in range(128, -1, -16):
@@ -199,4 +207,13 @@ try:
         time.sleep(5)
 
 except (KeyboardInterrupt, SystemExit):
+    draw.rectangle((0, 0, width, height), outline=0, fill=0)
+    disp.image(image)
+    disp.show()
     print("Exiting...")
+
+except Exception as e:
+    draw.rectangle((0, 0, width, height), outline=0, fill=0)
+    disp.image(image)
+    disp.show()
+    logger.error(str(e))
