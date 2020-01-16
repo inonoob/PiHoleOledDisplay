@@ -7,7 +7,7 @@ Inspired by willdurand/pihole-oled, I updated to work with the newest version of
 - Oled display 0,96" 128x32
 - Raspberry pi 
 
-Connect
+### How to connect the Oled and the Raspberry pi
 
 ![alt text](https://github.com/inonoob/PiHoleOledDisplay/blob/master/res/Oled-Pi-connection_Steckplatine.png)
 
